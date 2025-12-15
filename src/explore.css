@@ -1,0 +1,95 @@
+/* -------- EXPLORE PAGE -------- */
+
+.explore-page {
+  background: #ffefe2;
+  min-height: 100vh;
+  padding-top: 100px;
+}
+
+.explore-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Cards placed BELOW header/logo */
+.cards-row {
+  display: flex;
+  gap: 28px;
+  justify-content: center;
+  margin-top: 60px; /* Push cards downward */
+  margin-bottom: 40px;
+}
+
+/* INDIVIDUAL CARD with POP effect */
+.explore-card {
+  background: white;
+  padding: 26px;
+  border-radius: 16px;
+  width: 48%;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.explore-card:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 14px 32px rgba(0,0,0,0.16);
+}
+
+.explore-card h2 {
+  font-size: 1.6rem;
+  margin-bottom: 14px;
+  color: #222;
+}
+
+.explore-card p {
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.card-bullets {
+  color: #777;
+  font-size: 0.95rem;
+}
+
+/* CTA LINK */
+.explore-link {
+  margin-top: 8px;
+  display: inline-block;
+  font-weight: 700;
+  color: #d75600;
+  font-size: 1rem;
+}
+
+.explore-link:hover {
+  text-decoration: underline;
+}
+
+/* WHY JOIN SECTION */
+.why-join {
+  margin-top: 20px;
+}
+
+.why-join h3 {
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.why-join ul li {
+  margin-bottom: 6px;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .cards-row {
+    flex-direction: column;
+  }
+  .explore-card {
+    width: 100%;
+  }
+}

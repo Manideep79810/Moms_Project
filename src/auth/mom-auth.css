@@ -1,0 +1,222 @@
+/* ========================================================= */
+/* OVERLAY                                                   */
+/* ========================================================= */
+
+.mom-auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 600;
+}
+
+/* ========================================================= */
+/* MODAL                                                     */
+/* ========================================================= */
+
+.mom-auth-modal {
+  background: #fff;
+  width: 600px;                 /* wider = breathing room */
+  max-height: 90vh;
+  overflow-y: auto;
+  border-radius: 18px;
+  padding: 26px 30px 22px;
+  box-shadow: 0 24px 70px rgba(0,0,0,0.28);
+}
+
+/* ========================================================= */
+/* HEADER                                                    */
+/* ========================================================= */
+
+.mom-auth-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mom-auth-header h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #222;
+}
+
+.mom-auth-close {
+  background: none;
+  border: none;
+  font-size: 1.3rem;
+  cursor: pointer;
+}
+
+/* ========================================================= */
+/* TABS                                                      */
+/* ========================================================= */
+
+.mom-auth-tabs {
+  display: flex;
+  gap: 12px;
+  margin: 18px 0 26px;
+}
+
+.mom-tab {
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: 1px solid #ddd;
+  background: #fff;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mom-tab.active {
+  background: #ff6a3d;
+  color: #fff;
+  border-color: #ff6a3d;
+}
+
+/* ========================================================= */
+/* STEP CONTENT                                              */
+/* ========================================================= */
+
+.mom-step h3 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 18px;
+}
+
+/* Grid for fields */
+.mom-form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+/* Two-column row (Full name + Age) */
+.mom-form-grid.two-col {
+  grid-template-columns: 2fr 1fr;
+}
+
+/* ========================================================= */
+/* FORM ELEMENTS                                             */
+/* ========================================================= */
+
+.mom-step label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.mom-step input,
+.mom-step textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 6px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+.mom-step textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* ========================================================= */
+/* DISH CARD                                                 */
+/* ========================================================= */
+
+.mom-dish-card {
+  border: 1px dashed #ddd;
+  background: #fafafa;
+  padding: 18px;
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+
+.mom-photo-upload {
+  width: 130px;
+  height: 130px;
+  border: 2px dashed #ccc;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.mom-photo-upload img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mom-photo-upload span {
+  font-size: 0.85rem;
+  color: #777;
+  text-align: center;
+}
+
+.mom-photo-upload input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* ========================================================= */
+/* FOOTER ACTIONS                                            */
+/* ========================================================= */
+
+.mom-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 26px;
+}
+
+.mom-btn-primary {
+  background: #ff6a3d;
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mom-btn-secondary {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* ========================================================= */
+/* FOOTER NOTE                                              */
+/* ========================================================= */
+
+.mom-auth-note {
+  margin-top: 18px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* ========================================================= */
+/* MOBILE                                                   */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+  .mom-auth-modal {
+    width: 92%;
+    padding: 20px;
+  }
+
+  .mom-form-grid.two-col {
+    grid-template-columns: 1fr; /* stack on mobile */
+  }
+}
