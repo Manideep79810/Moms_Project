@@ -17,11 +17,11 @@
   display: flex;
   gap: 28px;
   justify-content: center;
-  margin-top: 60px; /* Push cards downward */
+  margin-top: 60px;
   margin-bottom: 40px;
 }
 
-/* INDIVIDUAL CARD with POP effect */
+/* INDIVIDUAL CARD */
 .explore-card {
   background: white;
   padding: 26px;
@@ -89,7 +89,82 @@
   .cards-row {
     flex-direction: column;
   }
+
   .explore-card {
     width: 100%;
   }
+}
+
+/* ========================================================= */
+/* AUTH POPUP OVERLAY (NEW – SAFE ADDITION)                  */
+/* ========================================================= */
+
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* ========================================================= */
+/* LOGIN / SIGNUP POPUP BOX                                  */
+/* ========================================================= */
+
+.auth-choice-box {
+  background: #ffffff;
+  width: 360px;
+  max-width: 90%;
+  padding: 32px 26px 28px;
+  border-radius: 18px;
+  text-align: center;
+  position: relative; /* required for close button */
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+}
+
+/* TITLE */
+.auth-choice-box h3 {
+  margin: 0 0 26px;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #222;
+}
+
+/* BUTTONS */
+.auth-choice-box .btn-primary,
+.auth-choice-box .btn-secondary {
+  width: 100%;
+  padding: 14px 0;
+  border-radius: 14px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.auth-choice-box .btn-primary {
+  background: #ff6a3d;
+  color: #fff;
+  border: none;
+  margin-bottom: 14px;
+}
+
+.auth-choice-box .btn-secondary {
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #333;
+}
+
+/* CLOSE (✕) */
+.auth-choice-box .close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  border: none;
+  background: none;
+  font-size: 22px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #444;
 }

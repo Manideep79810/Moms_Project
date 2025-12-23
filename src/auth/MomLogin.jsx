@@ -1,9 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./mom-auth.css";
+import MomDishManager from "../components/MomDishManager";
 
-export default function MomLogin({ onClose, onSwitchToCustomer }) {
+export default function MomLogin({ onClose, onSwitchToCustomer, mode }) {
   const modalRef = useRef(null);
-  const [step, setStep] = useState(1);
+  const navigate = useNavigate();
+
+  // LOGIN → start directly at OTP | SIGNUP → step 1
+  const [step, setStep] = useState(mode === "login" ? 5 : 1);
+  const [otpError, setOtpError] = useState("");
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -35,39 +41,20 @@ export default function MomLogin({ onClose, onSwitchToCustomer }) {
     }
   };
 
-  /* ---------- DISH HANDLERS ---------- */
+  /* ---------- OTP VERIFY ---------- */
+  const verifyOtpAndFinish = () => {
+    if (formData.otp === "12345") {
+      localStorage.setItem("role", "mom");
+      localStorage.setItem("isVerified", "true");
+      localStorage.setItem("momName", formData.fullName || "Mom");
+      localStorage.setItem("momProfile", JSON.stringify(formData));
+      localStorage.setItem("momDishes", JSON.stringify(dishes));
 
-  const addDish = () => {
-    setDishes([
-      ...dishes,
-      {
-        name: "",
-        photo: null,
-        preview: "",
-        description: "",
-        price: "",
-        prepTime: "",
-        badges: "",
-        stock: 10
-      }
-    ]);
-  };
-
-  const updateDish = (i, key, value) => {
-    const updated = [...dishes];
-    updated[i][key] = value;
-    setDishes(updated);
-  };
-
-  const removeDish = (i) => {
-    setDishes(dishes.filter((_, index) => index !== i));
-  };
-
-  const handlePhoto = (i, file) => {
-    if (!file) return;
-    const preview = URL.createObjectURL(file);
-    updateDish(i, "photo", file);
-    updateDish(i, "preview", preview);
+      navigate("/mom-dashboard");
+      onClose();
+    } else {
+      setOtpError("Invalid OTP. Use 12345");
+    }
   };
 
   return (
@@ -79,7 +66,7 @@ export default function MomLogin({ onClose, onSwitchToCustomer }) {
       >
         {/* HEADER */}
         <div className="mom-auth-header">
-          <h2>Get started</h2>
+          <h2>{mode === "login" ? "Mom Login" : "Mom Signup"}</h2>
           <button className="mom-auth-close" onClick={onClose}>✕</button>
         </div>
 
@@ -93,14 +80,14 @@ export default function MomLogin({ onClose, onSwitchToCustomer }) {
           </button>
         </div>
 
-        {/* STEP CONTENT */}
+        {/* ================= CONTENT ================= */}
         <div className="mom-step">
 
-          {/* STEP 1 */}
-          {step === 1 && (
+          {/* ================= SIGNUP FLOW ================= */}
+
+          {step === 1 && mode === "signup" && (
             <>
               <h3>1 — Personal</h3>
-
               <div className="mom-form-grid two-col">
                 <div>
                   <label>Full name</label>
@@ -111,7 +98,6 @@ export default function MomLogin({ onClose, onSwitchToCustomer }) {
                     }
                   />
                 </div>
-
                 <div>
                   <label>Age</label>
                   <input
@@ -126,11 +112,9 @@ export default function MomLogin({ onClose, onSwitchToCustomer }) {
             </>
           )}
 
-          {/* STEP 2 */}
-          {step === 2 && (
+          {step === 2 && mode === "signup" && (
             <>
               <h3>2 — Kitchen profile</h3>
-
               <div className="mom-form-grid">
                 <div>
                   <label>Kitchen / Display name</label>
@@ -141,22 +125,18 @@ export default function MomLogin({ onClose, onSwitchToCustomer }) {
                     }
                   />
                 </div>
-
                 <div>
                   <label>Cuisine / specialties</label>
                   <input
-                    placeholder="e.g., South Indian, Snacks"
                     value={formData.cuisines}
                     onChange={(e) =>
                       setFormData({ ...formData, cuisines: e.target.value })
                     }
                   />
                 </div>
-
                 <div>
                   <label>Holiday closures</label>
                   <input
-                    placeholder="e.g., Sun, 2025-12-25"
                     value={formData.holidays}
                     onChange={(e) =>
                       setFormData({ ...formData, holidays: e.target.value })
@@ -167,11 +147,9 @@ export default function MomLogin({ onClose, onSwitchToCustomer }) {
             </>
           )}
 
-          {/* STEP 3 */}
-          {step === 3 && (
+          {step === 3 && mode === "signup" && (
             <>
               <h3>3 — Hours & Capacity</h3>
-
               <div className="mom-form-grid">
                 <div>
                   <label>Operating hours</label>
@@ -200,10 +178,7 @@ export default function MomLogin({ onClose, onSwitchToCustomer }) {
                     type="number"
                     value={formData.deliveryRadius}
                     onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        deliveryRadius: e.target.value
-                      })
+                      setFormData({ ...formData, deliveryRadius: e.target.value })
                     }
                   />
                 </div>
@@ -214,10 +189,7 @@ export default function MomLogin({ onClose, onSwitchToCustomer }) {
                     type="number"
                     value={formData.maxOrders}
                     onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        maxOrders: e.target.value
-                      })
+                      setFormData({ ...formData, maxOrders: e.target.value })
                     }
                   />
                 </div>
@@ -225,145 +197,81 @@ export default function MomLogin({ onClose, onSwitchToCustomer }) {
             </>
           )}
 
-          {/* STEP 4 */}
-          {step === 4 && (
-            <>
-              <h3>4 — Add dishes</h3>
-              <p className="mom-muted">
-                Add signature & regular dishes. Use “Add Dish” to include multiple items.
+          {step === 4 && mode === "signup" && (
+            <MomDishManager dishes={dishes} setDishes={setDishes} />
+          )}
+
+          {/* ================= LOGIN (NEW UI) ================= */}
+
+          {step === 5 && (
+            <div className="mom-login-modern">
+              <h3 className="mom-login-title">Welcome Back 👩‍🍳</h3>
+              <p className="mom-login-subtitle">
+                Login to manage your kitchen
               </p>
 
-              {dishes.map((dish, i) => (
-                <div key={i} className="mom-dish-card">
-                  <label>Dish name</label>
-                  <input
-                    value={dish.name}
-                    onChange={(e) =>
-                      updateDish(i, "name", e.target.value)
-                    }
-                  />
+              <div className="mom-login-fields">
+                <input
+                  value={formData.kitchenName}
+                  onChange={(e) =>
+                    setFormData({ ...formData, kitchenName: e.target.value })
+                  }
+                  placeholder="Kitchen Name"
+                />
 
-                  <label>Photo</label>
-                  <div className="mom-photo-upload">
-                    {dish.preview ? (
-                      <img src={dish.preview} alt="preview" />
-                    ) : (
-                      <span>Square preview</span>
-                    )}
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) =>
-                        handlePhoto(i, e.target.files[0])
-                      }
-                    />
-                  </div>
+                <input
+                  value={formData.phone}
+                  onChange={(e) =>
+                    setFormData({ ...formData, phone: e.target.value })
+                  }
+                  placeholder="Phone Number"
+                />
 
-                  <label>Description</label>
-                  <textarea
-                    value={dish.description}
-                    onChange={(e) =>
-                      updateDish(i, "description", e.target.value)
-                    }
-                  />
-
-                  <label>Price</label>
-                  <input
-                    type="number"
-                    value={dish.price}
-                    onChange={(e) =>
-                      updateDish(i, "price", e.target.value)
-                    }
-                  />
-
-                  <label>Prep time (mins)</label>
-                  <input
-                    type="number"
-                    value={dish.prepTime}
-                    onChange={(e) =>
-                      updateDish(i, "prepTime", e.target.value)
-                    }
-                  />
-
-                  <label>Dietary badges</label>
-                  <input
-                    placeholder="veg, gluten-free"
-                    value={dish.badges}
-                    onChange={(e) =>
-                      updateDish(i, "badges", e.target.value)
-                    }
-                  />
-
-                  <label>Stock / available</label>
-                  <input
-                    type="number"
-                    value={dish.stock}
-                    onChange={(e) =>
-                      updateDish(i, "stock", e.target.value)
-                    }
-                  />
-
-                  <button
-                    className="mom-remove-dish"
-                    onClick={() => removeDish(i)}
-                  >
-                    Remove
-                  </button>
-                </div>
-              ))}
-
-              <button className="mom-btn-primary" onClick={addDish}>
-                Add Dish
-              </button>
-            </>
-          )}
-
-          {/* STEP 5 */}
-          {step === 5 && (
-            <>
-              <h3>5 — Verify OTP</h3>
-
-              <div className="mom-form-grid">
-                <div>
-                  <label>Phone number</label>
-                  <input placeholder="+91 9XXXXXXXXX" />
-                </div>
-
-                <div>
-                  <label>Enter OTP</label>
-                  <input placeholder="6-digit OTP" />
-                </div>
+                <input
+                  value={formData.otp}
+                  onChange={(e) =>
+                    setFormData({ ...formData, otp: e.target.value })
+                  }
+                  placeholder="Enter OTP"
+                />
               </div>
 
-              <button className="mom-btn-primary mom-full">
-                Verify & Finish
+              {otpError && <p className="mom-error">{otpError}</p>}
+
+              <button
+                className="mom-login-btn"
+                onClick={verifyOtpAndFinish}
+              >
+                Verify & Login
               </button>
-            </>
+            </div>
           )}
         </div>
 
-        {/* FOOTER */}
-        <div className="mom-footer">
-          {step > 1 && (
-            <button
-              className="mom-btn-secondary"
-              onClick={() => setStep(step - 1)}
-            >
-              Previous
-            </button>
-          )}
-          {step < 5 && (
-            <button
-              className="mom-btn-primary"
-              onClick={() => setStep(step + 1)}
-            >
-              Next
-            </button>
-          )}
-        </div>
+        {/* FOOTER (SIGNUP ONLY) */}
+        {mode === "signup" && (
+          <div className="mom-footer">
+            {step > 1 && (
+              <button
+                className="mom-btn-secondary"
+                onClick={() => setStep(step - 1)}
+              >
+                Previous
+              </button>
+            )}
+            {step < 5 && (
+              <button
+                className="mom-btn-primary"
+                onClick={() => setStep(step + 1)}
+              >
+                Next
+              </button>
+            )}
+          </div>
+        )}
 
         <p className="mom-auth-note">
-          We’ll ask you to verify identity via OTP. Data submitted securely.
+          OTP is temporary for demo purposes (12345).
         </p>
       </div>
     </div>

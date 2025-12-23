@@ -142,3 +142,137 @@
     width: 92%;
   }
 }
+/* OTP SECTION */
+.otp-section {
+  margin-top: 18px;
+}
+
+.auth-full {
+  width: 100%;
+  margin-top: 14px;
+}
+
+/* ACTIONS ALIGNMENT */
+.auth-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+
+/* BUTTONS */
+.btn-primary {
+  background: #ff6a3d;
+  color: #fff;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-secondary {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* TABS */
+.auth-tabs {
+  display: flex;
+  gap: 12px;
+  margin: 16px 0;
+}
+
+.auth-tabs .tab {
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.auth-tabs .tab.active {
+  background: #ff6a3d;
+  color: #fff;
+  border-color: #ff6a3d;
+}
+
+/* ========================================================= */
+/* MODERN CUSTOMER LOGIN (LOGIN ONLY)                         */
+/* ========================================================= */
+
+.customer-login-modern {
+  max-width: 380px;
+  margin: 0 auto;
+  padding: 30px 26px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+  text-align: center;
+}
+
+.customer-login-title {
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin-bottom: 6px;
+  color: #222;
+}
+
+.customer-login-subtitle {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 22px;
+}
+
+.customer-login-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.customer-login-fields input {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.customer-login-fields input:focus {
+  outline: none;
+  border-color: #ff6a3d;
+  box-shadow: 0 0 0 2px rgba(255, 106, 61, 0.15);
+}
+
+.customer-login-btn {
+  width: 100%;
+  margin-top: 22px;
+  padding: 14px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #ff6a3d, #ff8c42);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.customer-login-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(255, 106, 61, 0.35);
+}
+
+/* ERROR MESSAGE (LOGIN ONLY) */
+.auth-error {
+  color: #ff4d4f;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+

@@ -1,0 +1,124 @@
+/* ========================================================= */
+/* MOM DISH MANAGER                                         */
+/* ========================================================= */
+
+.mom-dish-card {
+  border: 1px dashed #ddd;
+  background: #fafafa;
+  padding: 18px;
+  border-radius: 14px;
+  margin-bottom: 22px;
+}
+
+.mom-dish-card label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #333;
+  margin-top: 12px;
+}
+
+.mom-dish-card input,
+.mom-dish-card textarea {
+  width: 100%;
+  padding: 12px 14px;
+  margin-top: 6px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 1rem;
+}
+
+.mom-dish-card textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* Photo Upload */
+.mom-photo-upload {
+  width: 140px;
+  height: 140px;
+  border: 2px dashed #ccc;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  position: relative;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.mom-photo-upload img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mom-photo-upload span {
+  font-size: 0.85rem;
+  color: #777;
+  text-align: center;
+}
+
+.mom-photo-upload input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* Remove Dish Button */
+.mom-remove-dish {
+  margin-top: 14px;
+  background: #fff;
+  border: 1px solid #ddd;
+  color: #555;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mom-remove-dish:hover {
+  background: #ffecec;
+  border-color: #ff6a3d;
+  color: #ff6a3d;
+}
+
+/* Add Dish Button */
+.mom-btn-primary {
+  background: #ff6a3d;
+  color: #fff;
+  border: none;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.mom-btn-primary:hover {
+  opacity: 0.9;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .mom-photo-upload {
+    width: 120px;
+    height: 120px;
+  }
+}
+/* Dish Actions */
+.mom-dish-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+/* Disabled fields (view mode) */
+.mom-dish-card input:disabled,
+.mom-dish-card textarea:disabled {
+  background: #f3f3f3;
+  color: #666;
+  cursor: not-allowed;
+}

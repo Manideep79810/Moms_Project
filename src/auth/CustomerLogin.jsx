@@ -1,37 +1,64 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./auth.css";
 
-export default function CustomerLogin({ onClose, onSwitchToMom }) {
+export default function CustomerLogin({ onClose, onSwitchToMom, mode }) {
   const modalRef = useRef(null);
-  const [otpSent, setOtpSent] = useState(false);
+  const navigate = useNavigate();
 
-  // Close on ESC
+  const [otpSent, setOtpSent] = useState(mode === "login");
+  const [otp, setOtp] = useState("");
+  const [otpError, setOtpError] = useState("");
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    phone: "",
+    email: "",
+    address: ""
+  });
+
+  /* ESC close */
   useEffect(() => {
-    const handleEsc = (e) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", handleEsc);
-    return () => document.removeEventListener("keydown", handleEsc);
+    const esc = (e) => e.key === "Escape" && onClose();
+    document.addEventListener("keydown", esc);
+    return () => document.removeEventListener("keydown", esc);
   }, [onClose]);
 
-  // Close on outside click
+  /* Overlay click */
   const handleOverlayClick = (e) => {
     if (modalRef.current && !modalRef.current.contains(e.target)) {
       onClose();
     }
   };
 
+  /* OTP verify */
+  const verifyOtpAndFinish = () => {
+    if (otp === "12345") {
+      localStorage.setItem("role", "customer");
+      localStorage.setItem("isVerified", "true");
+      localStorage.setItem("customerProfile", JSON.stringify(formData));
+
+      navigate("/customer-dashboard");
+      onClose();
+    } else {
+      setOtpError("Invalid OTP. Use 12345");
+    }
+  };
+
   return (
     <div className="auth-overlay" onMouseDown={handleOverlayClick}>
-      <div className="auth-modal" ref={modalRef} onMouseDown={(e) => e.stopPropagation()}>
-        
+      <div
+        className="auth-modal"
+        ref={modalRef}
+        onMouseDown={(e) => e.stopPropagation()}
+      >
         {/* HEADER */}
         <div className="auth-header">
-          <h2>Get started</h2>
+          <h2>{mode === "login" ? "Customer Login" : "Customer Signup"}</h2>
           <button className="auth-close" onClick={onClose}>✕</button>
         </div>
 
-        {/* ROLE TABS */}
+        {/* TABS */}
         <div className="auth-tabs">
           <button className="tab active">Customer</button>
           <button className="tab" onClick={onSwitchToMom}>
@@ -39,46 +66,120 @@ export default function CustomerLogin({ onClose, onSwitchToMom }) {
           </button>
         </div>
 
-        {/* HELPER TEXT */}
+        {/* HELPER */}
         <p className="auth-helper">
-          Quick sign-up. We’ll send an OTP to verify your phone.
+          OTP is temporary for demo purposes (<b>12345</b>)
         </p>
 
-        {/* FORM */}
-        <form className="auth-form">
-          <label>Full name</label>
-          <input type="text" placeholder="Enter full name" />
+        {/* ================= SIGNUP (UNCHANGED) ================= */}
+        {mode === "signup" && (
+          <form className="auth-form">
+            <label>Full name</label>
+            <input
+              value={formData.fullName}
+              onChange={(e) =>
+                setFormData({ ...formData, fullName: e.target.value })
+              }
+            />
 
-          <label>Phone (preferred)</label>
-          <input type="tel" placeholder="+91 9XXXXXXXXX" />
+            <label>Phone</label>
+            <input
+              value={formData.phone}
+              onChange={(e) =>
+                setFormData({ ...formData, phone: e.target.value })
+              }
+            />
 
-          <label>Email (optional)</label>
-          <input type="email" placeholder="Enter email" />
+            <label>Email</label>
+            <input
+              value={formData.email}
+              onChange={(e) =>
+                setFormData({ ...formData, email: e.target.value })
+              }
+            />
 
-          <label>Default address</label>
-          <input type="text" placeholder="Start typing address..." />
+            <label>Default address</label>
+            <input
+              value={formData.address}
+              onChange={(e) =>
+                setFormData({ ...formData, address: e.target.value })
+              }
+            />
 
-          <div className="auth-actions">
+            {!otpSent ? (
+              <div className="auth-actions">
+                <button
+                  type="button"
+                  className="btn-primary"
+                  onClick={() => setOtpSent(true)}
+                >
+                  Send OTP
+                </button>
+              </div>
+            ) : (
+              <div className="otp-section">
+                <input
+                  placeholder="Enter OTP"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                />
+
+                {otpError && <p style={{ color: "red" }}>{otpError}</p>}
+
+                <button
+                  type="button"
+                  className="btn-primary auth-full"
+                  onClick={verifyOtpAndFinish}
+                >
+                  Verify & Finish
+                </button>
+              </div>
+            )}
+          </form>
+        )}
+
+        {/* ================= LOGIN (NEW MODERN UI) ================= */}
+        {mode === "login" && (
+          <div className="customer-login-modern">
+            <h3 className="customer-login-title">Welcome Back 👋</h3>
+            <p className="customer-login-subtitle">
+              Login to continue ordering
+            </p>
+
+            <div className="customer-login-fields">
+              <input
+                placeholder="Email Address"
+                value={formData.email}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
+              />
+
+              <input
+                placeholder="Phone Number"
+                value={formData.phone}
+                onChange={(e) =>
+                  setFormData({ ...formData, phone: e.target.value })
+                }
+              />
+
+              <input
+                placeholder="Enter OTP"
+                value={otp}
+                onChange={(e) => setOtp(e.target.value)}
+              />
+            </div>
+
+            {otpError && <p className="auth-error">{otpError}</p>}
+
             <button
-              type="button"
-              className="btn-primary"
-              onClick={() => setOtpSent(true)}
+              className="customer-login-btn"
+              onClick={verifyOtpAndFinish}
             >
-              Send OTP
-            </button>
-
-            <button type="button" className="btn-secondary">
-              Sign in with Google
+              Verify & Login
             </button>
           </div>
-
-          {otpSent && (
-            <div className="otp-section">
-              <label>Enter OTP</label>
-              <input type="text" placeholder="6-digit OTP" />
-            </div>
-          )}
-        </form>
+        )}
       </div>
     </div>
   );

@@ -1,0 +1,193 @@
+/* ========================================================= */
+/* CONTAINER                                                 */
+/* ========================================================= */
+
+.mom-dashboard-container {
+  padding: 30px;
+  font-family: Arial, sans-serif;
+  background: #fff;
+  min-height: 100vh;
+}
+
+/* ========================================================= */
+/* NAVIGATION                                                */
+/* ========================================================= */
+
+.mom-dashboard-nav ul {
+  display: flex;
+  gap: 26px;
+  list-style: none;
+  padding: 0 0 10px;
+  margin: 0;
+  border-bottom: 2px solid #eee;
+}
+
+.mom-dashboard-nav li {
+  cursor: pointer;
+  font-weight: 600;
+  color: #555;
+  padding-bottom: 6px;
+  border-bottom: 2px solid transparent;
+  transition: all 0.25s ease;
+}
+
+/* Default active (Dashboard) */
+.mom-dashboard-nav .active {
+  color: #ff6a3d;
+  border-bottom-color: #ff6a3d;
+}
+
+/* 🔥 BLUR ALL NON-HOVERED ITEMS */
+.mom-dashboard-nav ul:hover li:not(:hover) {
+  opacity: 0.35;
+  filter: blur(1px);
+}
+
+/* 🔥 HOVERED ITEM GETS UNDERLINE + COLOR */
+.mom-dashboard-nav ul li:hover {
+  opacity: 1;
+  filter: blur(0);
+  color: #ff6a3d;
+  border-bottom-color: #ff6a3d;
+}
+
+/* ========================================================= */
+/* WELCOME                                                   */
+/* ========================================================= */
+
+.mom-welcome {
+  margin-top: 22px;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #222;
+}
+
+/* ========================================================= */
+/* STATS CARDS                                               */
+/* ========================================================= */
+
+.mom-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px;
+  margin-top: 22px;
+}
+
+.stat-card {
+  background: #fafafa;
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  border: 1px solid #eee;
+}
+
+.stat-card h2 {
+  font-size: 1.6rem;
+  color: #222;
+  margin-bottom: 6px;
+  font-weight: 800;
+}
+
+.stat-card p {
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* ========================================================= */
+/* RECENT ORDERS                                             */
+/* ========================================================= */
+
+.recent-orders-title {
+  margin-top: 34px;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #222;
+}
+
+.empty-orders {
+  margin-top: 16px;
+  padding: 32px;
+  border: 1px dashed #ddd;
+  border-radius: 14px;
+  background: #fafafa;
+  text-align: center;
+}
+
+.empty-orders p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.empty-orders span {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.95rem;
+  color: #777;
+}
+
+.recent-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+}
+
+.recent-orders-table th,
+.recent-orders-table td {
+  border: 1px solid #ddd;
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 0.95rem;
+}
+
+.recent-orders-table th {
+  background: #f9f9f9;
+  color: #333;
+  font-weight: 600;
+}
+
+/* ========================================================= */
+/* ACTION BUTTONS                                            */
+/* ========================================================= */
+
+.mom-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 26px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 12px 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #fff;
+  color: #444;
+}
+
+.action-btn.primary {
+  background: #ff6a3d;
+  color: #fff;
+  border: none;
+}
+
+/* ========================================================= */
+/* MOBILE                                                    */
+/* ========================================================= */
+
+@media (max-width: 600px) {
+  .mom-dashboard-container {
+    padding: 20px;
+  }
+
+  .mom-dashboard-nav ul {
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  .mom-actions {
+    flex-direction: column;
+  }
+}

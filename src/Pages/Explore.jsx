@@ -4,8 +4,13 @@ import CustomerLogin from "../auth/CustomerLogin";
 import MomLogin from "../auth/MomLogin";
 
 export default function Explore() {
-  const [showCustomerLogin, setShowCustomerLogin] = useState(false);
-  const [showMomLogin, setShowMomLogin] = useState(false);
+  const [role, setRole] = useState(null); // "mom" | "customer"
+  const [mode, setMode] = useState(null); // "login" | "signup"
+
+  const closeAll = () => {
+    setRole(null);
+    setMode(null);
+  };
 
   return (
     <>
@@ -17,7 +22,7 @@ export default function Explore() {
 
             {/* ---------------- MOM CARD ---------------- */}
             <div className="explore-card">
-              <h2>Be a Mom’s Cloud Kitchen</h2>
+              <h2>Be a Mom's Cloud Kitchen</h2>
               <p>
                 Turn your home cooking into income. Guided onboarding,
                 dish creator, menu management, and kitchen capacity setup.
@@ -30,8 +35,7 @@ export default function Explore() {
                 className="explore-link"
                 onClick={(e) => {
                   e.preventDefault();
-                  setShowCustomerLogin(false);
-                  setShowMomLogin(true);
+                  setRole("mom");
                 }}
               >
                 I'm a Mom →
@@ -53,8 +57,7 @@ export default function Explore() {
                 className="explore-link"
                 onClick={(e) => {
                   e.preventDefault();
-                  setShowMomLogin(false);
-                  setShowCustomerLogin(true);
+                  setRole("customer");
                 }}
               >
                 I'm a Customer →
@@ -75,24 +78,51 @@ export default function Explore() {
         </div>
       </div>
 
-      {/* ---------------- CUSTOMER LOGIN MODAL ---------------- */}
-      {showCustomerLogin && (
-        <CustomerLogin
-          onClose={() => setShowCustomerLogin(false)}
-          onSwitchToMom={() => {
-            setShowCustomerLogin(false);
-            setShowMomLogin(true);
+      {/* -------- LOGIN / SIGNUP CHOICE BOX -------- */}
+      {role && !mode && (
+        <div className="auth-overlay">
+          <div className="auth-choice-box">
+            <h3>{role === "mom" ? "Mom Access" : "Customer Access"}</h3>
+
+            <button
+              className="btn-primary"
+              onClick={() => setMode("login")}
+            >
+              Login
+            </button>
+
+            <button
+              className="btn-secondary"
+              onClick={() => setMode("signup")}
+            >
+              Sign Up
+            </button>
+
+            <button className="close-btn" onClick={closeAll}>✕</button>
+          </div>
+        </div>
+      )}
+
+      {/* -------- MOM LOGIN / SIGNUP -------- */}
+      {role === "mom" && mode && (
+        <MomLogin
+          mode={mode}
+          onClose={closeAll}
+          onSwitchToCustomer={() => {
+            setRole("customer");
+            setMode(null);
           }}
         />
       )}
 
-      {/* ---------------- MOM LOGIN MODAL ---------------- */}
-      {showMomLogin && (
-        <MomLogin
-          onClose={() => setShowMomLogin(false)}
-          onSwitchToCustomer={() => {
-            setShowMomLogin(false);
-            setShowCustomerLogin(true);
+      {/* -------- CUSTOMER LOGIN / SIGNUP -------- */}
+      {role === "customer" && mode && (
+        <CustomerLogin
+          mode={mode}
+          onClose={closeAll}
+          onSwitchToMom={() => {
+            setRole("mom");
+            setMode(null);
           }}
         />
       )}

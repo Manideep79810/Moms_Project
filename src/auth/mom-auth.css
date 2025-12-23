@@ -18,7 +18,7 @@
 
 .mom-auth-modal {
   background: #fff;
-  width: 600px;                 /* wider = breathing room */
+  width: 600px;
   max-height: 90vh;
   overflow-y: auto;
   border-radius: 18px;
@@ -39,7 +39,6 @@
 .mom-auth-header h2 {
   font-size: 1.6rem;
   font-weight: 800;
-  color: #222;
 }
 
 .mom-auth-close {
@@ -75,7 +74,7 @@
 }
 
 /* ========================================================= */
-/* STEP CONTENT                                              */
+/* SIGNUP STYLES (UNCHANGED)                                 */
 /* ========================================================= */
 
 .mom-step h3 {
@@ -84,90 +83,78 @@
   margin-bottom: 18px;
 }
 
-/* Grid for fields */
 .mom-form-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 18px;
 }
 
-/* Two-column row (Full name + Age) */
 .mom-form-grid.two-col {
   grid-template-columns: 2fr 1fr;
 }
 
-/* ========================================================= */
-/* FORM ELEMENTS                                             */
-/* ========================================================= */
-
 .mom-step label {
-  display: block;
   font-weight: 600;
-  font-size: 0.95rem;
-  color: #333;
 }
 
-.mom-step input,
-.mom-step textarea {
+.mom-step input {
   width: 100%;
   padding: 12px 14px;
-  margin-top: 6px;
   border-radius: 10px;
   border: 1px solid #ddd;
-  font-size: 1rem;
-}
-
-.mom-step textarea {
-  resize: vertical;
-  min-height: 90px;
 }
 
 /* ========================================================= */
-/* DISH CARD                                                 */
+/* MODERN LOGIN (NEW)                                        */
 /* ========================================================= */
 
-.mom-dish-card {
-  border: 1px dashed #ddd;
-  background: #fafafa;
-  padding: 18px;
-  border-radius: 14px;
-  margin-bottom: 20px;
-}
-
-.mom-photo-upload {
-  width: 130px;
-  height: 130px;
-  border: 2px dashed #ccc;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.mom-login-modern {
+  max-width: 380px;
+  margin: 0 auto;
+  padding: 30px 26px;
   background: #fff;
-  position: relative;
-  overflow: hidden;
-}
-
-.mom-photo-upload img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.mom-photo-upload span {
-  font-size: 0.85rem;
-  color: #777;
+  border-radius: 20px;
+  box-shadow: 0 18px 45px rgba(0,0,0,0.12);
   text-align: center;
 }
 
-.mom-photo-upload input {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
+.mom-login-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.mom-login-subtitle {
+  font-size: 0.95rem;
+  color: #666;
+  margin-bottom: 22px;
+}
+
+.mom-login-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mom-login-fields input {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+.mom-login-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 13px;
+  border-radius: 14px;
+  border: none;
+  background: linear-gradient(135deg, #ff6a3d, #ff8c42);
+  color: white;
+  font-weight: 700;
   cursor: pointer;
 }
 
 /* ========================================================= */
-/* FOOTER ACTIONS                                            */
+/* FOOTER                                                    */
 /* ========================================================= */
 
 .mom-footer {
@@ -196,9 +183,10 @@
   cursor: pointer;
 }
 
-/* ========================================================= */
-/* FOOTER NOTE                                              */
-/* ========================================================= */
+.mom-error {
+  color: #ff4d4f;
+  margin-top: 10px;
+}
 
 .mom-auth-note {
   margin-top: 18px;
@@ -214,9 +202,5 @@
   .mom-auth-modal {
     width: 92%;
     padding: 20px;
-  }
-
-  .mom-form-grid.two-col {
-    grid-template-columns: 1fr; /* stack on mobile */
   }
 }
